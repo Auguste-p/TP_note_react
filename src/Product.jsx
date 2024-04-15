@@ -5,16 +5,15 @@ import React from "react";
 import { Card } from "primereact/card";
 import { Rating } from "primereact/rating";
 import { Badge } from "primereact/badge";
-import Header from "./Header";
-import Footer from "./Footer";
 
 const Product = ({ product }) => {
   const { price, discountPercentage } = product;
   const discountedPrice = price - price * (discountPercentage / 100);
 
+  console.log(typeof(product.rating));
+
   return (
     <>
-      {/* <Header /> */}
       <Card
         title={product.title}
         subTitle={product.brand}
@@ -26,32 +25,29 @@ const Product = ({ product }) => {
           style={{ width: "100%", maxHeight: "200px", objectFit: "cover" }}
         />
         <p>{product.description}</p>
-        <div className="product-price-container p-d-flex p-flex-column">
+        <div className="product-price-container">
           <span
             className="product-original-price"
             style={{ textDecoration: "line-through", color: "gray" }}
           >
             {product.price.toFixed(2)} €
           </span>
-          <span
-            className="product-discounted-price"
-            style={{ fontSize: "1.2em", fontWeight: "bold" }}
-          >
+          <span className="product-discounted-price">
             {discountedPrice.toFixed(2)} €
           </span>
         </div>
-
-        <div style={{ marginBottom: "10px" }}>
-          <Rating value={product.rating} readOnly cancel={false} />{product.rating}
+        
+        <div className="rating">
+          <Rating value={product.rating} readOnly cancel={false} />
+          {product.rating}
         </div>
-        <div>
+        <div className="stock">
           <Badge
             value={`Stock: ${product.stock}`}
             severity={product.stock > 0 ? "success" : "danger"}
           />
         </div>
       </Card>
-      {/* <Footer /> */}
     </>
   );
 };
